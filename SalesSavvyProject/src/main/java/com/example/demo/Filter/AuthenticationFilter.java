@@ -1,7 +1,6 @@
-package com.example.demo.Filter;
+package com.example.demo.filter;
 
 import com.example.demo.entity.Role;
-
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.AuthService;
@@ -22,10 +21,8 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 @WebFilter(urlPatterns = {"/api/*","/admin/*"})
-@Component
 public class AuthenticationFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
@@ -104,7 +101,7 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        if (requestURI.startsWith("/api/") && (role != Role.CUSTOMER && role != Role.ADMIN)) {
+        if (requestURI.startsWith("/api/") && role != Role.CUSTOMER) {
             sendErrorResponse(httpResponse, HttpServletResponse.SC_FORBIDDEN, "Forbidden: Customer access required");
             return;
         }
